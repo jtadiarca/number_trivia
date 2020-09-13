@@ -23,6 +23,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # Service locator(updated)
+  get_it: ^4.0.4
+  # Bloc for state management (updated)
+  flutter_bloc: ^6.0.5
+  # Value equality (updated)
+  equatable: ^1.2.5
+  # Functional programming thingies (updated)
+  dartz: ^0.9.1
+  # Remote API (updated)
+  connectivity: ^0.4.3+7 
+  http: ^0.12.2
+  # Local cache
+  shared_preferences: ^0.5.10
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -32,6 +45,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mockito: ^4.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
