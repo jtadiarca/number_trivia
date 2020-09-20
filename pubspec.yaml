@@ -32,7 +32,7 @@ dependencies:
   # Functional programming thingies (updated)
   dartz: ^0.9.1
   # Remote API (updated)
-  connectivity: ^0.4.3+7 
+  data_connection_checker: ^0.3.4
   http: ^0.12.2
   # Local cache
   shared_preferences: ^0.5.10
