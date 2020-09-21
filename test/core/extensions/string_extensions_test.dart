@@ -1,22 +1,15 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:number_trivia/core/util/input_converter.dart';
+import 'package:number_trivia/core/error/failures.dart';
+import 'package:number_trivia/core/extensions/string_extensions.dart';
 
 void main() {
-  InputConverter inputConverter;
-
-  setUp(() {
-    inputConverter = InputConverter();
-  });
-
-  group('stringToUnsignedInt', () {
+  group('toUnsignedInt', () {
     test(
       'should return an integer when the string represents an unsigned integer',
       () async {
-        // arrange
-        final str = '123';
         // act
-        final result = inputConverter.stringToUnsignedInteger(str);
+        final result = '123'.toUnsignedInt();
         // assert
         expect(result, Right(123));
       },
@@ -25,10 +18,8 @@ void main() {
     test(
       'should return a Failure when the string is not an integer',
       () async {
-        // arrange
-        final str = 'abc';
         // act
-        final result = inputConverter.stringToUnsignedInteger(str);
+        final result = 'abc'.toUnsignedInt();
         // assert
         expect(result, Left(InvalidInputFailure()));
       },
@@ -37,10 +28,8 @@ void main() {
     test(
       'should return a Failure when the string is a negative integer',
       () async {
-        // arrange
-        final str = '-123';
         // act
-        final result = inputConverter.stringToUnsignedInteger(str);
+        final result = '-123'.toUnsignedInt();
         // assert
         expect(result, Left(InvalidInputFailure()));
       },
