@@ -1,9 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:number_trivia/core/error/failures.dart';
+import 'package:number_trivia/core/usecases/usecase.dart';
 
+import '../../../../core/error/failure_messages.dart';
+import '../../../../core/extensions/failure_extensions.dart';
 import '../../../../core/extensions/string_extensions.dart';
 import '../../domain/entities/number_trivia.dart';
 import '../../domain/usecases/concrete_number_trivia.dart';
@@ -11,11 +16,6 @@ import '../../domain/usecases/random_number_trivia.dart';
 
 part 'number_trivia_event.dart';
 part 'number_trivia_state.dart';
-
-const String SERVER_FAILURE_MESSAGE = 'Server Failure';
-const String CACHE_FAILURE_MESSAGE = 'Cache Failure';
-const String INVALID_INPUT_FAILURE_MESSAGE =
-    'Invalid Input - The number must be a postive integer or zero';
 
 class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
   final ConcreteNumberTrivia concreteNumberTrivia;
@@ -38,8 +38,28 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
         (failure) async* {
           yield Error(message: INVALID_INPUT_FAILURE_MESSAGE);
         },
-        (integer) => throw UnimplementedError(),
+        (integer) async* {
+          yield NumberTriviaLoading();
+          final failureOrTrivia =
+              await concreteNumberTrivia(Params(number: integer));
+
+          yield* _eitherLoadedOrErrorState(failureOrTrivia);
+        },
       );
+    } else if (event is RandomNumberTriviaEvent) {
+      yield NumberTriviaLoading();
+      final failureOrTrivia = await randomNumberTrivia(NoParams());
+
+      yield* _eitherLoadedOrErrorState(failureOrTrivia);
     }
+  }
+
+  Stream<NumberTriviaState> _eitherLoadedOrErrorState(
+    Either<Failure, NumberTrivia> failureOrTrivia,
+  ) async* {
+    yield failureOrTrivia.fold(
+      (failure) => Error(message: failure.toMessage()),
+      (trivia) => NumberTriviaLoaded(trivia: trivia),
+    );
   }
 }
