@@ -36,7 +36,7 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
 
       yield* inputEither.fold(
         (failure) async* {
-          yield Error(message: INVALID_INPUT_FAILURE_MESSAGE);
+          yield NumberTriviaError(message: INVALID_INPUT_FAILURE_MESSAGE);
         },
         (integer) async* {
           yield NumberTriviaLoading();
@@ -58,7 +58,7 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
     Either<Failure, NumberTrivia> failureOrTrivia,
   ) async* {
     yield failureOrTrivia.fold(
-      (failure) => Error(message: failure.toMessage()),
+      (failure) => NumberTriviaError(message: failure.toMessage()),
       (trivia) => NumberTriviaLoaded(trivia: trivia),
     );
   }

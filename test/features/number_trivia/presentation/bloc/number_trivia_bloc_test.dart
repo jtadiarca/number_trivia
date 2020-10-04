@@ -43,7 +43,7 @@ void main() {
         // arrange
         // assert later
         final expected = [
-          Error(message: INVALID_INPUT_FAILURE_MESSAGE),
+          NumberTriviaError(message: INVALID_INPUT_FAILURE_MESSAGE),
         ];
         expectLater(bloc.asBroadcastStream(), emitsInOrder(expected));
         // act
@@ -91,7 +91,7 @@ void main() {
         // assert later
         final expected = [
           NumberTriviaLoading(),
-          Error(message: SERVER_FAILURE_MESSAGE),
+          NumberTriviaError(message: SERVER_FAILURE_MESSAGE),
         ];
         expectLater(bloc.asBroadcastStream(), emitsInOrder(expected));
         // act
@@ -108,7 +108,7 @@ void main() {
         // assert later
         final expected = [
           NumberTriviaLoading(),
-          Error(message: CACHE_FAILURE_MESSAGE),
+          NumberTriviaError(message: CACHE_FAILURE_MESSAGE),
         ];
         expectLater(bloc.asBroadcastStream(), emitsInOrder(expected));
         // act
@@ -160,7 +160,7 @@ void main() {
         // assert later
         final expected = [
           NumberTriviaLoading(),
-          Error(message: SERVER_FAILURE_MESSAGE),
+          NumberTriviaError(message: SERVER_FAILURE_MESSAGE),
         ];
         expectLater(bloc.asBroadcastStream(), emitsInOrder(expected));
         // act
@@ -177,7 +177,7 @@ void main() {
         // assert later
         final expected = [
           NumberTriviaLoading(),
-          Error(message: CACHE_FAILURE_MESSAGE),
+          NumberTriviaError(message: CACHE_FAILURE_MESSAGE),
         ];
         expectLater(bloc.asBroadcastStream(), emitsInOrder(expected));
         // act
